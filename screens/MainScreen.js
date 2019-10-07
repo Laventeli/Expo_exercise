@@ -2,6 +2,13 @@ import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 
 export default class MainScreen extends React.Component {
+  static navigationOptions = {
+    headerTitle: 'Photo App',
+    headerTintColor: 'white',
+    headerStyle: {
+      backgroundColor: 'blue'
+    }
+  }
     render() {
         return (
             <View style={styles.container}>
@@ -13,7 +20,7 @@ export default class MainScreen extends React.Component {
                 />
                 <Button style={styles.text}
                     title="Go Back"
-                    onPress={() => this.props.navigation.navigate("Home")}
+                    onPress={() => this.props.navigation.goBack()} // TODO logout
                 />
             </View>
         )

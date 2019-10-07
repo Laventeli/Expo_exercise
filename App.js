@@ -5,7 +5,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import MainScreen from './screens/MainScreen.js';
 import HomeScreen from './screens/HomeScreen.js';
 
-const AppNavigator = createStackNavigator(
+const AppNavigator = createStackNavigator(  // TODO use switch navigator (?)
   {
     Main: MainScreen,
     Home: HomeScreen,

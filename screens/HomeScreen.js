@@ -6,7 +6,14 @@ import * as Facebook from 'expo-facebook';
 const idFB = '2460846114195049';
 
 export default class HomeScreen extends React.Component {
-  
+  static navigationOptions = {
+    headerTitle: 'Photo App',
+    headerTintColor: 'white',
+    headerStyle: {
+      backgroundColor: 'blue'
+    }
+  }
+
   loginFB = async () => {
       try {
         const {
@@ -37,7 +44,7 @@ export default class HomeScreen extends React.Component {
                   </View>
                 </TouchableOpacity> 
                 <Button 
-                    title='Login without FB'
+                    title='Continue without login'
                     onPress={() => this.props.navigation.navigate("Main")}
                 />
             </View>
