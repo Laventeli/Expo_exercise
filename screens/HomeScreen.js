@@ -24,7 +24,10 @@ export default class HomeScreen extends React.Component {
         });
         if (type === 'success') {
           alert('Login successful!');
-          this.props.navigation.navigate("Main"); // send username to next screen
+          let username = "MS";
+          this.props.navigation.navigate("Main", {
+            username: username,
+          } ); // send username to next screen
         } else {
           alert('Login not successful.');
         }
@@ -45,7 +48,7 @@ export default class HomeScreen extends React.Component {
                 </TouchableOpacity> 
                 <Button 
                     title='Continue without login'
-                    onPress={() => this.props.navigation.navigate("Main")}
+                    onPress={() => this.props.navigation.navigate('Main')}  // TODO remove button
                 />
             </View>
         )
