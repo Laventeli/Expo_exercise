@@ -26,9 +26,10 @@ export default class CameraScreen extends React.Component {
     this.setState({ hasCameraPermission: status === 'granted' });
   }
 
-  async saveImage() {
+  async saveImage(photo) {
     let uri = this.state.imageuri;
     console.log('lets save image');
+    console.log(photo);
     const dir = FileSystem.documentDirectory + 'photos/'
     await FileSystem.makeDirectoryAsync(dir, {intermediates: true });
     await FileSystem.moveAsync({
@@ -50,17 +51,18 @@ export default class CameraScreen extends React.Component {
 
   async snapPhoto() {      
     if (this.camera) {
-      const options = { quality: 1, base64: true, fixOrientation: true, exif: true, skipProcessing: true};
+      const options = { quality: 1, base64: false, fixOrientation: true, exif: true, skipProcessing: true};
       let photo = await this.camera.takePictureAsync(options);
       photo.exif.Orientation = 1;  
       alert('Photo taken')         
       this.setState({imageuri: photo.uri})
       console.log("state:" + this.state.imageuri);
-      this.saveImage(); 
+      this.saveImage(photo); 
      }
     }
   
   render() {
+    console.log('photoID:', photoId);
     const { hasCameraPermission } = this.state;
     if (hasCameraPermission === null) {
       return <View />;
