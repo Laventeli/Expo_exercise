@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Image, TouchableOpacity, Icon, StyleSheet, Text, View } from 'react-native';
+import { Image, TouchableOpacity, StyleSheet, Text, View } from 'react-native';
 import * as Facebook from 'expo-facebook';
 import { FontAwesome } from '@expo/vector-icons';
 
@@ -27,11 +27,16 @@ export default class HomeScreen extends React.Component {
           permissions: ['public_profile'],
         });
         if (type === 'success') {
+          const response = await fetch(
+            `https://graph.facebook.com/me?access_token=${token}&fields=name`
+          )
+          const json = await response.json();
+          let username = json.name;
+          console.log(username);
           alert('Login successful!');
-          let username = "MS";
           this.props.navigation.navigate("Main", {
             username: username,
-          } ); // send username to next screen
+          } );
         } else {
           alert('Login not successful.');
         }
