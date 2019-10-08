@@ -1,7 +1,7 @@
 import React from 'react';
-import { Button, TouchableOpacity, StyleSheet, Text, View, Alert } from 'react-native';
+import { Button, Image, TouchableOpacity, Icon, StyleSheet, Text, View } from 'react-native';
 import * as Facebook from 'expo-facebook';
-
+import { FontAwesome } from '@expo/vector-icons';
 
 const idFB = '2460846114195049';
 
@@ -39,17 +39,18 @@ export default class HomeScreen extends React.Component {
   render() {
         return (
             <View style={styles.container}>
-                <Text>Welcome to Photo App!</Text>
-                <Text style={styles.text}>Log in to continue.</Text>
-                <TouchableOpacity onPress={() => this.loginFB()}>
-                  <View style={styles.fbButton}>
-                  <Text style={{color: 'white'}}>Login with FB</Text>
-                  </View>
+                <Text style={styles.text}>Welcome to Photo App!</Text>
+                <Image
+                  source={require('../assets/camera_icon.png')}
+                  style={{width: 200, height: 150, marginTop: 40, marginBottom: 60}}
+                />            
+                <FontAwesome.Button name="facebook" onPress={() => this.loginFB()}>
+                    Login with Facebook
+                </FontAwesome.Button>
+      
+                <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('Main')}>
+                   <Text style={styles.buttonText}>Continue without login</Text>
                 </TouchableOpacity> 
-                <Button 
-                    title='Continue without login'
-                    onPress={() => this.props.navigation.navigate('Main')}  // TODO remove button
-                />
             </View>
         )
     }
@@ -57,19 +58,29 @@ export default class HomeScreen extends React.Component {
 
 const styles = StyleSheet.create({
   text: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginTop: 50,
+    marginBottom: 40,
+  },
+  button: {
     margin: 20,
   },
+  buttonText: {
+    fontSize: 18,
+  },
   fbButton: {
-    margin: 20,
-    width: '50%',
-    borderRadius: 4,
-    padding: 25,
-    backgroundColor: '#3b5998',
+    height: 40,
+    width:160,
+    borderRadius:10,
+    backgroundColor : "yellow",
+    marginLeft :50,
+    marginRight:50,
+    marginTop :20
   },
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
   },
 });

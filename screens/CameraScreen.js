@@ -5,7 +5,6 @@ import { Camera } from 'expo-camera';
 import { ThemeColors } from 'react-navigation';
 import * as FileSystem from 'expo-file-system';
 
-let photoId = 0;
 
 export default class CameraScreen extends React.Component {
   static navigationOptions = {
@@ -19,60 +18,66 @@ export default class CameraScreen extends React.Component {
     hasCameraPermission: null,
     type: Camera.Constants.Type.back,
     imageuri: null,
-    contentUri: null,
+    imageId: null,
+    newImage: false,
   };
   async componentDidMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ hasCameraPermission: status === 'granted' });
   }
 
-  async saveImage(photo) {
-    let uri = this.state.imageuri;
-    console.log('lets save image');
-    console.log(photo);
-    const dir = FileSystem.documentDirectory + 'photos/'
-    await FileSystem.makeDirectoryAsync(dir, {intermediates: true });
-    await FileSystem.moveAsync({
-                        from: uri,
-                        to: `${FileSystem.documentDirectory}photos/Photo_${
-                        ++photoId
-                        }.jpg`});
-    this.setState({contentUri: true});                     
-      //let info = await FileSystem.getInfoAsync(this.state.imageuri); //TODO FileSystem.copyAsync - make a permanent copy
-      //console.log(info);
-  
-      //let directory = await FileSystem.readDirectoryAsync(this.state.imageuri);
-      //console.log(directory);        
-            
-    //let contentUri = await FileSystem.getContentUriAsync(uri);
-    //console.log(contentUri);
-    //this.setState({contentUri: contentUri});
+  componentWillUnmount() {
+    console.log('unmounting camerascreen');
   }
 
+  async saveImage(uriphoto, id) {
+    console.log('fc saveImage - uriphoto:', uriphoto);
+    console.log('fc saveImage - id:', id);
+    const dirUri = FileSystem.documentDirectory + 'photos/'
+    await FileSystem.makeDirectoryAsync(dirUri, {intermediates: true });
+    await FileSystem.moveAsync({
+                        from: uriphoto,
+                        to: `${FileSystem.documentDirectory}photos/Photo_${
+                        id
+                        }.jpg`});
+    alert('Photo saved')  
+    console.log('image saved, id is', id);                    
+    this.setState({newImage: true, imageId: id});  
+    console.log('image save2 (after setstat', this.state.imageId);                 
+      //let info = await FileSystem.getInfoAsync(this.state.imageuri); //TODO FileSystem.copyAsync - make a permanent copy
+
+  }
+ 
   async snapPhoto() {      
     if (this.camera) {
       const options = { quality: 1, base64: false, fixOrientation: true, exif: true, skipProcessing: true};
       let photo = await this.camera.takePictureAsync(options);
       photo.exif.Orientation = 1;  
-      alert('Photo taken')         
-      this.setState({imageuri: photo.uri})
-      console.log("state:" + this.state.imageuri);
-      this.saveImage(photo); 
+      // -------------
+      this.saveImage(photo.uri, this.idGenerator())
      }
     }
+
+  idGenerator() {
+      var S4 = function() {
+         return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+      };
+      return (S4()+S4());
+  }
   
+
+
   render() {
-    console.log('photoID:', photoId);
     const { hasCameraPermission } = this.state;
     if (hasCameraPermission === null) {
       return <View />;
     } else if (hasCameraPermission === false) {
       return <Text>No access to camera</Text>;
-    } else if (this.state.contentUri) {
+    } else if (this.state.newImage) {
       return <Image
       style={{width: Dimensions.get('window').width, height: Dimensions.get('window').height}}
       source={{uri: `${FileSystem.documentDirectory}photos/Photo_${
-        photoId
+        this.state.imageId
         }.jpg`}}
     />
     } else {

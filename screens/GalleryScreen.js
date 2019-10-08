@@ -26,7 +26,7 @@ export default class GalleryScreen extends React.Component {
   }
   
   state = {
-      files: null,
+      files: [],
   }
 
     componentWillUnmount() {
@@ -36,10 +36,12 @@ export default class GalleryScreen extends React.Component {
   async componentDidMount() {
     console.log('component did mount');
     const dirUri = FileSystem.documentDirectory + 'photos/'
+    await FileSystem.makeDirectoryAsync(dirUri, {intermediates: true });
     let fileNames = await FileSystem.readDirectoryAsync(dirUri)
+    console.log(fileNames);
     let id = 0;
     this.setState({files: fileNames.map(fileName => ({name: fileName, id: id++}))})
-    console.log(fileNames);
+    console.log(this.state.files);
     if (this.state.files) console.log(this.state.files.length);
   }
 
@@ -53,23 +55,27 @@ export default class GalleryScreen extends React.Component {
         // delete from directory
     }
 
+        // Check if folder exists
+      //  const info = await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'photos/');
+      //  console.log('info:', info);
+     
+
     render() {
-        if (this.state.files) {
+        if (this.state.files.length < 1) {
+            return (
+                <Text>No images</Text>
+            )
+        }
+        else {
             let imageList = this.state.files.map((file, index) => {
                 return (<ImageView onDelete={() => this.deleteImage(file.id)} key={index} name={file.name}/>)
             })
             return(
-            <ScrollView style={styles.container}>
-                {imageList} 
-            </ScrollView>
-            )
-        } else {
-            return (
-                <View style={styles.container}>
-                    <Text>Welcome to gallery</Text>    
-                </View>
-            )
-        }
+                <ScrollView style={styles.container}>
+                    {imageList} 
+                </ScrollView>
+                )
+        }              
     }
 }
 
