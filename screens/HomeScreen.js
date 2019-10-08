@@ -8,9 +8,13 @@ const idFB = '2460846114195049';
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     headerTitle: 'Photo App',
+    headerTitleStyle: { 
+      textAlign:"center", 
+      flex:1 
+    },
     headerTintColor: 'white',
     headerStyle: {
-      backgroundColor: 'blue'
+      backgroundColor: 'black',
     }
   }
 
@@ -44,8 +48,8 @@ export default class HomeScreen extends React.Component {
                   source={require('../assets/camera_icon.png')}
                   style={{width: 200, height: 150, marginTop: 40, marginBottom: 60}}
                 />            
-                <FontAwesome.Button name="facebook" onPress={() => this.loginFB()}>
-                    Login with Facebook
+                <FontAwesome.Button name="facebook" backgroundColor="#3b5998" size={40} onPress={() => this.loginFB()}>
+                    <Text style={styles.buttonFBtext}>Login with Facebook</Text>
                 </FontAwesome.Button>
       
                 <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('Main')}>
@@ -64,19 +68,16 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   button: {
-    margin: 20,
+    marginTop: 20,
+  },
+  buttonFBtext: {
+    fontSize: 18, 
+    color: 'white', 
+    fontWeight: 'bold'
   },
   buttonText: {
     fontSize: 18,
-  },
-  fbButton: {
-    height: 40,
-    width:160,
-    borderRadius:10,
-    backgroundColor : "yellow",
-    marginLeft :50,
-    marginRight:50,
-    marginTop :20
+    textDecorationLine: 'underline',
   },
   container: {
     flex: 1,
