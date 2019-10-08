@@ -5,12 +5,14 @@ import { createStackNavigator } from 'react-navigation-stack';
 import MainScreen from './screens/MainScreen.js';
 import HomeScreen from './screens/HomeScreen.js';
 import CameraScreen from './screens/CameraScreen.js';
+import GalleryScreen from './screens/GalleryScreen.js';
 
 const AppNavigator = createStackNavigator(  // TODO use switch navigator (?)
   {
     Main: MainScreen,
     Home: HomeScreen,
     Camera: CameraScreen,
+    Gallery: GalleryScreen,
   },
   {
     initialRouteName: 'Home',

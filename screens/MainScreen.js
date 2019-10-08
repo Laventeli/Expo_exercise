@@ -20,6 +20,7 @@ export default class MainScreen extends React.Component {
                 />
                 <Button style={styles.text}
                     title="Show gallery"
+                    onPress={() => this.props.navigation.navigate('Gallery')}
                 />
                 <Button style={styles.text}
                     title="Go Back"
