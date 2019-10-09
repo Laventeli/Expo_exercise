@@ -1,9 +1,5 @@
 import React from 'react';
-import { ScrollView, Image, Button, StyleSheet, Text, View } from 'react-native';
-import * as FileSystem from 'expo-file-system';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-
-
+import { Image } from 'react-native';
 
 export default class ImageScreen extends React.Component {
   static navigationOptions = ({navigation}) => ({
@@ -27,14 +23,3 @@ export default class ImageScreen extends React.Component {
         )            
     }
 }
-
-
-const styles = StyleSheet.create({
-  text: {
-    margin: 30,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});
