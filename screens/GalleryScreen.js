@@ -2,6 +2,7 @@ import React from 'react';
 import { ScrollView, Image, Button, StyleSheet, Text, View } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Ionicons } from '@expo/vector-icons';
 
 const dirUri = FileSystem.documentDirectory + 'photos/'
 
@@ -10,13 +11,20 @@ class ImageView extends React.Component {
         const imageUri = `${dirUri}${this.props.name}`
         return (
             <View>
+            <View style={styles.imageView}>
                 <TouchableOpacity  onPress={this.props.onPress}>
-                    <Image style={{width: 50, height: 50}}
+                    <View style={styles.wrapper}>
+                    <Image style={styles.image}
                         source={{uri: imageUri}}
                     />
+                    </View>
                 </TouchableOpacity>
-                <Button title="delete" onPress={this.props.onDelete}/>
-                <Text>{this.props.name}</Text>
+            
+                <TouchableOpacity onPress={this.props.onDelete}>
+                    <Ionicons name='md-close' size={50}/>
+                </TouchableOpacity>
+            </View>
+            <Text style={styles.text}>{this.props.name}</Text>
             </View>
         )
     }
@@ -86,6 +94,28 @@ export default class GalleryScreen extends React.Component {
 const styles = StyleSheet.create({
   text: {
     margin: 30,
+  },
+  image: {
+    width: 120,
+    height: 80,
+  },
+  wrapper: {
+    padding: 5,
+    borderColor: 'gray',
+    borderWidth: 1,
+    elevation: 2,
+  },
+  imageView: {
+    flex: 1,
+    flexDirection: 'row',
+    marginTop: 15,
+    marginLeft: 10,
+    marginRight: 10,
+    alignItems: 'center',
+    justifyContent: "space-between",
+  },
+  text: {
+    marginLeft: 10,
   },
   container: {
     flex: 1,

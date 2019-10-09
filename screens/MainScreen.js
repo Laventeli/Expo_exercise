@@ -40,8 +40,8 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 22,
     fontWeight: 'bold',
-    marginTop: 50,
-    marginBottom: 40,
+    marginTop: 40,
+    marginBottom: 30,
   },
   button: {
     backgroundColor: '#f5958e',
