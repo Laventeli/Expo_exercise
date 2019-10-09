@@ -6,13 +6,15 @@ import MainScreen from './screens/MainScreen.js';
 import HomeScreen from './screens/HomeScreen.js';
 import CameraScreen from './screens/CameraScreen.js';
 import GalleryScreen from './screens/GalleryScreen.js';
+import ImageScreen from './screens/ImageScreen.js';
 
-const AppNavigator = createStackNavigator(  // TODO use switch navigator (?)
+const AppNavigator = createStackNavigator( 
   {
     Main: MainScreen,
     Home: HomeScreen,
     Camera: CameraScreen,
     Gallery: GalleryScreen,
+    Image: ImageScreen,
   },
   {
     initialRouteName: 'Home',
